@@ -5,7 +5,7 @@ This application is result of one of the primitive's study group work.
 This application roughly has five function.
 
 First. Today's Dormitery menu crawling.
-    application find lunch,dinner menu from <a href=https://dormi.kongju.ac.kr/HOME/sub.php?code=04130>URL</a> as targeted date changes.
+    application find lunch,dinner menu from [URL](https://dormi.kongju.ac.kr/HOME/sub.php?code=04130) as targeted date changes.
     
 Second. you can interact with like/unlike button on each menu.
 
