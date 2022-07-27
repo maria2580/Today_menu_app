@@ -103,7 +103,9 @@ public class MainActivity extends AppCompatActivity {
 
 
         getMenu_and_set_on_layout(day);
-
+        new Thread(() -> {
+            setCommentOnLayout();
+        }).start();
 
         button_prev.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,7 +113,9 @@ public class MainActivity extends AppCompatActivity {
                 long t=86400000;//하루
                 now-=t;
                 day = sdf.format(new Date(now));//함수 호출로 day값 상승 하강 시키는 함수 만들 예정임
-
+                new Thread(() -> {
+                    setCommentOnLayout();
+                }).start();
                 getMenu_and_set_on_layout(day);
             }
         });
@@ -122,6 +126,9 @@ public class MainActivity extends AppCompatActivity {
                 long t=86400000;//하루
                 now+=t;
                 day = sdf.format(new Date(now));
+                new Thread(() -> {
+                    setCommentOnLayout();
+                }).start();
                 getMenu_and_set_on_layout(day);
             }
         });
@@ -357,6 +364,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     String[] getCommentStrings(){
+        String[] strings;
         //DB에서 댓글을 불러와서 스트링배열로 반환하는 메서드, 세진
         //해당 날짜의 댓글 DB에서 댓글 갯수를 먼저 읽어와서 인트형 변수로 저장하는 명령 작성
         System.out.println("get comments 함수 시작");
@@ -365,9 +373,14 @@ public class MainActivity extends AppCompatActivity {
         commentsDto=CallRetrofit.get_comments(day);
 
         System.out.println("REST GET 요청 완료 to "+day);
-        System.out.println("fdff in "+commentsDto);
-
-        String strings[] = commentsDto.getContent();
+        System.out.println("상태 체크 of commentDto is "+commentsDto);
+        try {
+            strings = commentsDto.getContent();
+        }catch (Exception e){
+            System.out.println("이 문구가 나오면 스프링 서버가 작동중이지 않을 가능성이 높습니다.");
+            System.out.println("따라서 댓글이 보이지 않는게 정상입니다.");
+            strings=new String[1];
+        }
         System.out.println("DTO에 담긴 내용 복사 "+strings);
 
         for (int i = 0 ; i<strings.length;i++){

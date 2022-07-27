@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -40,7 +41,8 @@ public class SubActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String content = et_request.getText().toString();
                 CallRetrofit.post_suggestions(content, day);
-                //Toast.makeText(getApplicationContext(),"전송 완료!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),"전송 완료!", Toast.LENGTH_SHORT).show();
+                finish();
             }
         });
     }
