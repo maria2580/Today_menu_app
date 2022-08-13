@@ -72,11 +72,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         now = System.currentTimeMillis();
-        try {
-            url= new URL("http://127.0.0.1:8080/");
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
+
 
         commentsDto=  new CommentsDto();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -290,13 +286,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
     void setImageOnLayout(int targetImage){
-
-
-
-
-
-
-
         /*Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType("image/*");
         startActivityResult.launch(intent);
@@ -320,12 +309,7 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        //ultipartBody.Part t2 =MultipartBody.Part.createFormData("file",Urls.encode(fileName));
-
-
-
-
-
+        //multipartBody.Part t2 =MultipartBody.Part.createFormData("file",Urls.encode(fileName));
     }
     void set_dinner_image_on_DB(String day){
         Intent intent = new Intent(Intent.ACTION_PICK);
@@ -382,11 +366,13 @@ public class MainActivity extends AppCompatActivity {
             strings=new String[1];
         }
         System.out.println("DTO에 담긴 내용 복사 "+strings);
-
-        for (int i = 0 ; i<strings.length;i++){
-            System.out.println("댓글 "+i+" "+strings[i]);
+        try {
+            for (int i = 0; i < strings.length; i++) {
+                System.out.println("댓글 " + i + " " + strings[i]);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
         }
-
         return strings;
     }
 

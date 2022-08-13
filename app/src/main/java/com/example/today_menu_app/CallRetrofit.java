@@ -21,7 +21,7 @@ public class CallRetrofit {
 
         Retrofit retrofit = RetrofitClient.getInstance();
         RetrofitAPI service= retrofit.create(RetrofitAPI.class);
-        Call<String> call = service.postImage(body,date);
+        Call<String> call = service.postImage_L(body,date);
         call.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
