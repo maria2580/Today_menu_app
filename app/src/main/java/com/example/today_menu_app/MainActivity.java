@@ -343,6 +343,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void sendVoteUp(){
+
         db.execSQL(String.format("insert into comments(ID, Content, Date) values(%d,'%s','%s');",4,"f","ate"));//실행만 하는 함수
         Cursor cursor;
         cursor = db.rawQuery("SELECT * FROM groupTBL;",null);//데이터를 받아오는 경우
