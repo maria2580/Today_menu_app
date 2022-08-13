@@ -1,5 +1,6 @@
 package com.example.today_menu_app;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -28,6 +29,10 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteDatabase.CursorFactory;
+import android.database.sqlite.SQLiteOpenHelper;
 
 public class MainActivity extends AppCompatActivity {
     Button button_prev;
@@ -57,6 +62,8 @@ public class MainActivity extends AppCompatActivity {
     long now;
     String today = " ";
     String day;
+    SQLiteDatabase db;
+    MyDBhelper myDBhelper;
 
     ActivityResultLauncher<Intent> startActivityResult = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
@@ -72,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         now = System.currentTimeMillis();
-
+        db= myDBhelper.getWritableDatabase();
 
         commentsDto=  new CommentsDto();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -145,13 +152,13 @@ public class MainActivity extends AppCompatActivity {
         button_like.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sendVoteUp(true);
+                sendVoteUp();
             }
         });
         button_dislike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sendVoteDown(false);
+                sendVoteDown();
             }
         });
         button_claim.setOnClickListener(new View.OnClickListener() {
@@ -335,8 +342,16 @@ public class MainActivity extends AppCompatActivity {
         //imageView2.setImageBitmap(bitmap);
     }
 
-    void sendVoteUp(boolean a){}//추천 비추천수를 DB에 반영시켜주느 메서드, 시현
-    void sendVoteDown(boolean b){}//추천 비추천수를 DB에 반영시켜주느 메서드, 시현
+    void sendVoteUp(){
+        db.execSQL(String.format("insert into comments(ID, Content, Date) values(%d,'%s','%s');",4,"f","ate"));//실행만 하는 함수
+        Cursor cursor;
+        cursor = db.rawQuery("SELECT * FROM groupTBL;",null);//데이터를 받아오는 경우
+
+
+    }//추천 비추천수를 DB에 반영시켜주느 메서드, 시현
+    void sendVoteDown(){
+        db = openOrCreateDatabase( "like-dislike" , MODE_PRIVATE, null);
+    }//추천 비추천수를 DB에 반영시켜주느 메서드, 시현
 
 
     void sendRequest(String today){
@@ -351,24 +366,24 @@ public class MainActivity extends AppCompatActivity {
         String[] strings;
         //DB에서 댓글을 불러와서 스트링배열로 반환하는 메서드, 세진
         //해당 날짜의 댓글 DB에서 댓글 갯수를 먼저 읽어와서 인트형 변수로 저장하는 명령 작성
-        System.out.println("get comments 함수 시작");
-        System.out.println("comments Dto 객체 생성 완료");
+       //System.out.println("get comments 함수 시작");
+        //System.out.println("comments Dto 객체 생성 완료");
 
         commentsDto=CallRetrofit.get_comments(day);
 
-        System.out.println("REST GET 요청 완료 to "+day);
-        System.out.println("상태 체크 of commentDto is "+commentsDto);
+        //System.out.println("REST GET 요청 완료 to "+day);
+        //System.out.println("상태 체크 of commentDto is "+commentsDto);
         try {
             strings = commentsDto.getContent();
         }catch (Exception e){
-            System.out.println("이 문구가 나오면 스프링 서버가 작동중이지 않을 가능성이 높습니다.");
-            System.out.println("따라서 댓글이 보이지 않는게 정상입니다.");
+        //    System.out.println("이 문구가 나오면 스프링 서버가 작동중이지 않을 가능성이 높습니다.");
+         //   System.out.println("따라서 댓글이 보이지 않는게 정상입니다.");
             strings=new String[1];
         }
-        System.out.println("DTO에 담긴 내용 복사 "+strings);
+        //System.out.println("DTO에 담긴 내용 복사 "+strings);
         try {
             for (int i = 0; i < strings.length; i++) {
-                System.out.println("댓글 " + i + " " + strings[i]);
+                //System.out.println("댓글 " + i + " " + strings[i]);
             }
         }catch (Exception e){
             e.printStackTrace();

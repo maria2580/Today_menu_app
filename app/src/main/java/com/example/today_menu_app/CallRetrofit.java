@@ -3,7 +3,11 @@ package com.example.today_menu_app;
 
 import android.util.Log;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import java.io.File;
+import java.util.ArrayList;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -12,6 +16,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class CallRetrofit {
     private static void post_image(File imageFile, String date){
@@ -69,6 +75,9 @@ System.out.println("token = ${Api.authToken}");
         Call<CommentDto> call = service.postComment(content,date);
 
 
+
+
+
         call.enqueue(new Callback<CommentDto>() {
 
             @Override
@@ -93,6 +102,7 @@ System.out.println("token = ${Api.authToken}");
         Retrofit retrofit = RetrofitClient.getInstance();
         RetrofitAPI service= retrofit.create(RetrofitAPI.class);
         Call<CommentsDto> call = service.getComments(day);
+
         try {
             commentsDto=call.execute().body();
         }catch (Exception e){e.printStackTrace();}
@@ -104,7 +114,6 @@ System.out.println("token = ${Api.authToken}");
         return commentsDto;
     }
     public static void post_suggestions(String content, String date){
-
 
         Retrofit retrofit = RetrofitClient.getInstance();
         RetrofitAPI service = retrofit.create(RetrofitAPI.class);
