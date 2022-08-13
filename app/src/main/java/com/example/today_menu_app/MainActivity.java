@@ -79,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         now = System.currentTimeMillis();
+        myDBhelper = new MyDBhelper(this);
         db= myDBhelper.getWritableDatabase();
 
         commentsDto=  new CommentsDto();
@@ -343,15 +344,49 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void sendVoteUp(){
-
-        db.execSQL(String.format("insert into comments(ID, Content, Date) values(%d,'%s','%s');",4,"f","ate"));//실행만 하는 함수
+       // db.execSQL(String.format("insert into comments(ID, Content, Date) values(%d,'%s','%s');",4,"f","ate"));//실행만 하는 함수
+        //flag 의 값이 0비추천 1추천 2둘다취소거나 그냥 데이터베이스에 들어온적 없는 상태
         Cursor cursor;
-        cursor = db.rawQuery("SELECT * FROM groupTBL;",null);//데이터를 받아오는 경우
-
+        int flag=2;
+        cursor = db.rawQuery(String.format("SELECT * FROM groupTBL WHERE DATE = %s;",day),null);//데이터를 받아오는 경우
+        while(cursor.moveToNext()){
+            int t = cursor.getColumnIndex("content");
+            flag = cursor.getInt(t);
+        }
+        if(flag==0){
+            db.execSQL(String.format("update groupTBL SET content=1 WHERE DATE = %s;",day));
+            //서버쪽 비추천수 1감소 추천수 1증가시키는 코드
+        }
+        if (flag==1){
+            db.execSQL(String.format("DELETE * FROM groupTBL WHERE DATE = %s;",day));
+            //서버쪽 추천수 1감소시키는 코드
+        }
+        if (flag==2){
+            db.execSQL(String.format("insert into groupTBL(ID,content,DATE) values (%d,%d,%d)"));
+            //서버쪽 추천수만 1증가시키는 코드
+        }
 
     }//추천 비추천수를 DB에 반영시켜주느 메서드, 시현
     void sendVoteDown(){
-        db = openOrCreateDatabase( "like-dislike" , MODE_PRIVATE, null);
+        Cursor cursor;
+        int flag=2;
+        cursor = db.rawQuery(String.format("SELECT * FROM groupTBL WHERE DATE = %s;",day),null);//데이터를 받아오는 경우
+        while(cursor.moveToNext()){
+            int t = cursor.getColumnIndex("content");
+            flag = cursor.getInt(t);
+        }
+        if(flag==0){
+            db.execSQL(String.format("DELETE * FROM groupTBL WHERE DATE = %s;",day));
+            //서버쪽 비추천수 1감소 시키는 코드
+        }
+        if (flag==1){
+            db.execSQL(String.format("update groupTBL SET content=0 WHERE DATE = %s;",day));
+            //서버쪽 추천수 1감소시키는 코드 비추천수 1증가시키는 코드
+        }
+        if (flag==2){
+            db.execSQL(String.format("insert into groupTBL(ID,content,DATE) values (%d,%d,%d)"));
+            //서버쪽 비추천수만 1증가시키는 코드
+        }
     }//추천 비추천수를 DB에 반영시켜주느 메서드, 시현
 
 
@@ -367,24 +402,24 @@ public class MainActivity extends AppCompatActivity {
         String[] strings;
         //DB에서 댓글을 불러와서 스트링배열로 반환하는 메서드, 세진
         //해당 날짜의 댓글 DB에서 댓글 갯수를 먼저 읽어와서 인트형 변수로 저장하는 명령 작성
-       //System.out.println("get comments 함수 시작");
-        //System.out.println("comments Dto 객체 생성 완료");
+       System.out.println("get comments 함수 시작");
+        System.out.println("comments Dto 객체 생성 완료");
 
         commentsDto=CallRetrofit.get_comments(day);
 
-        //System.out.println("REST GET 요청 완료 to "+day);
-        //System.out.println("상태 체크 of commentDto is "+commentsDto);
+        System.out.println("REST GET 요청 완료 to "+day);
+        System.out.println("상태 체크 of commentDto is "+commentsDto);
         try {
             strings = commentsDto.getContent();
         }catch (Exception e){
-        //    System.out.println("이 문구가 나오면 스프링 서버가 작동중이지 않을 가능성이 높습니다.");
-         //   System.out.println("따라서 댓글이 보이지 않는게 정상입니다.");
+            System.out.println("이 문구가 나오면 스프링 서버가 작동중이지 않을 가능성이 높습니다.");
+            System.out.println("따라서 댓글이 보이지 않는게 정상입니다.");
             strings=new String[1];
         }
-        //System.out.println("DTO에 담긴 내용 복사 "+strings);
+        System.out.println("DTO에 담긴 내용 복사 "+strings);
         try {
             for (int i = 0; i < strings.length; i++) {
-                //System.out.println("댓글 " + i + " " + strings[i]);
+                System.out.println("댓글 " + i + " " + strings[i]);
             }
         }catch (Exception e){
             e.printStackTrace();
