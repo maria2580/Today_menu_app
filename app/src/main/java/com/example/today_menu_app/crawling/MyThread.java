@@ -1,4 +1,4 @@
-package com.example.today_menu_app;
+package com.example.today_menu_app.crawling;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;

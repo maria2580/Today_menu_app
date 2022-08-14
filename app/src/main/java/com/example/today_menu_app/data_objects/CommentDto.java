@@ -1,19 +1,19 @@
-package com.example.today_menu_app;
+package com.example.today_menu_app.data_objects;
 
 import com.google.gson.annotations.SerializedName;
 
-public class SuggestionDto {
+public class CommentDto {
     @SerializedName("content") private String content;
     @SerializedName("date") private String date;
-    public SuggestionDto(String content, String date){
+    public CommentDto(String content, String date){
         this.content=content;
         this.date=date;
     }
-    public SuggestionDto(){ }
-    public String getContent(){
+    public CommentDto(){    }
+    public String getContent() {
         return content;
     }
-    public String getDate(){
+    public String getDate() {
         return date;
     }
 }

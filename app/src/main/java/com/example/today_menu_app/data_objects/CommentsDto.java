@@ -1,4 +1,4 @@
-package com.example.today_menu_app;
+package com.example.today_menu_app.data_objects;
 
 import com.google.gson.annotations.SerializedName;
 

@@ -1,4 +1,4 @@
-package com.example.today_menu_app;
+package com.example.today_menu_app.network;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

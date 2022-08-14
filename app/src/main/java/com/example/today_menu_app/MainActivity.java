@@ -1,6 +1,5 @@
 package com.example.today_menu_app;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -24,15 +23,17 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.File;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteDatabase.CursorFactory;
-import android.database.sqlite.SQLiteOpenHelper;
+
+import com.example.today_menu_app.SQLite.MyDBhelper;
+import com.example.today_menu_app.crawling.MyThread;
+import com.example.today_menu_app.data_objects.CommentsDto;
+import com.example.today_menu_app.network.CallRetrofit;
 
 public class MainActivity extends AppCompatActivity {
     Button button_prev;
@@ -405,7 +406,7 @@ public class MainActivity extends AppCompatActivity {
        System.out.println("get comments 함수 시작");
         System.out.println("comments Dto 객체 생성 완료");
 
-        commentsDto=CallRetrofit.get_comments(day);
+        commentsDto= CallRetrofit.get_comments(day);
 
         System.out.println("REST GET 요청 완료 to "+day);
         System.out.println("상태 체크 of commentDto is "+commentsDto);

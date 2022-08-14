@@ -1,4 +1,4 @@
-package com.example.today_menu_app;
+package com.example.today_menu_app.SQLite;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

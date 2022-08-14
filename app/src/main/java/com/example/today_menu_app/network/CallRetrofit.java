@@ -1,13 +1,13 @@
-package com.example.today_menu_app;
+package com.example.today_menu_app.network;
 
 
 import android.util.Log;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import com.example.today_menu_app.data_objects.CommentDto;
+import com.example.today_menu_app.data_objects.CommentsDto;
+import com.example.today_menu_app.data_objects.SuggestionDto;
 
 import java.io.File;
-import java.util.ArrayList;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -16,8 +16,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class CallRetrofit {
     private static void post_image(File imageFile, String date){
