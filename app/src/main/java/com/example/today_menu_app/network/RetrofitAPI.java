@@ -1,6 +1,5 @@
 package com.example.today_menu_app.network;
 
-import com.example.today_menu_app.data_objects.BytesDto;
 import com.example.today_menu_app.data_objects.CommentDto;
 import com.example.today_menu_app.data_objects.CommentsDto;
 import com.example.today_menu_app.data_objects.SuggestionDto;

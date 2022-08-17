@@ -3,10 +3,7 @@ package com.example.today_menu_app;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Picture;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -28,15 +25,11 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.net.URL;
-import java.nio.file.Files;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -48,17 +41,10 @@ import com.example.today_menu_app.SQLite.MyDBhelper;
 import com.example.today_menu_app.comment_recycler.CommentAdapter;
 import com.example.today_menu_app.comment_recycler.CommentData;
 import com.example.today_menu_app.crawling.MyThread;
-import com.example.today_menu_app.data_objects.BytesDto;
 import com.example.today_menu_app.data_objects.CommentsDto;
 import com.example.today_menu_app.network.CallRetrofit;
 import com.example.today_menu_app.network.Get_Dinner_image_Thread;
 import com.example.today_menu_app.network.Get_Lunch_image_Thread;
-
-
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
-import retrofit2.http.Multipart;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -382,8 +368,10 @@ public class MainActivity extends AppCompatActivity {
     void set_lunch_image_on_DB(String day) {
         BitmapDrawable drawable =targetImage==1?(BitmapDrawable) imageView.getDrawable():(BitmapDrawable)imageView2.getDrawable();
         Bitmap bitmap=drawable.getBitmap();
-
+        File file = new File(getDataDir()+"/images");
+        file.mkdirs();
         File fileCacheItem = new File(getDataDir()+"/images/temp.jpg");
+
         OutputStream out = null;
         if(!fileCacheItem.exists()) {
             try {
@@ -424,8 +412,10 @@ public class MainActivity extends AppCompatActivity {
         {
             BitmapDrawable drawable =targetImage==1?(BitmapDrawable) imageView.getDrawable():(BitmapDrawable)imageView2.getDrawable();
             Bitmap bitmap=drawable.getBitmap();
-
+            File file = new File(getDataDir()+"/images");
+            file.mkdirs();
             File fileCacheItem = new File(getDataDir()+"/images/temp.jpg");
+
             OutputStream out = null;
             if(!fileCacheItem.exists()) {
                 try {

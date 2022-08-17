@@ -3,23 +3,15 @@ package com.example.today_menu_app.network;
 
 import android.util.Log;
 
-import com.example.today_menu_app.data_objects.BytesDto;
 import com.example.today_menu_app.data_objects.CommentDto;
 import com.example.today_menu_app.data_objects.CommentsDto;
 import com.example.today_menu_app.data_objects.SuggestionDto;
 
-import org.apache.commons.lang3.ArrayUtils;
-
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.file.Files;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -69,7 +61,7 @@ public class CallRetrofit {
         });
     }
     public static byte[] get_image_L(String date) throws IOException {
-        BytesDto bytes=null;
+
         Retrofit retrofit = RetrofitClient.getInstance();
         RetrofitAPI service= retrofit.create(RetrofitAPI.class);
         Call<ResponseBody> call = service.getImage_L(date);
@@ -84,7 +76,6 @@ public class CallRetrofit {
         return response.bytes();
     }
     public static byte[] get_image_D(String date) throws IOException {
-        BytesDto bytes=null;
         Retrofit retrofit = RetrofitClient.getInstance();
         RetrofitAPI service= retrofit.create(RetrofitAPI.class);
         Call<ResponseBody> call = service.getImage_D(date);
