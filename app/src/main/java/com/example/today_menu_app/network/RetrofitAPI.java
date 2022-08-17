@@ -1,10 +1,12 @@
 package com.example.today_menu_app.network;
 
+import com.example.today_menu_app.data_objects.BytesDto;
 import com.example.today_menu_app.data_objects.CommentDto;
 import com.example.today_menu_app.data_objects.CommentsDto;
 import com.example.today_menu_app.data_objects.SuggestionDto;
 
 import okhttp3.MultipartBody;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -35,12 +37,12 @@ public interface RetrofitAPI {
     @POST("add/images/dinner/{date}")
     Call<String> postImage_D(@Part MultipartBody.Part file,@Path("date") String date);
 
-    @Multipart
-    @GET("images/lunch/{date}")
-    Call<String> getImage_L(@Path("date") String date);
 
-    @Multipart
+    @GET("images/lunch/{date}")
+    Call<ResponseBody> getImage_L(@Path("date") String date);
+
+
     @GET("images/dinner/{date}")
-    Call<String> getImage_D(@Path("date") String date);
+    Call<ResponseBody> getImage_D(@Path("date") String date);
 
 }
