@@ -386,9 +386,15 @@ public class MainActivity extends AppCompatActivity {
         try
         {
             fileCacheItem.createNewFile();
-            out = new FileOutputStream(fileCacheItem);
-
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+            int quality=100;
+            while(fileCacheItem.length()<(long)1048576){
+                out = new FileOutputStream(fileCacheItem);
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+                quality=quality-5;
+                if (quality<20){
+                    break;
+                }
+            }
         }
         catch (Exception e)
         {
@@ -432,9 +438,17 @@ public class MainActivity extends AppCompatActivity {
             try
             {
                 fileCacheItem.createNewFile();
-                out = new FileOutputStream(fileCacheItem);
 
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+                int quality=100;
+                while(fileCacheItem.length()<(long)1048576){
+                    out = new FileOutputStream(fileCacheItem);
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+                    quality=quality-5;
+                    if (quality<20){
+                        break;
+                    }
+                }
+
             }
             catch (Exception e)
             {
