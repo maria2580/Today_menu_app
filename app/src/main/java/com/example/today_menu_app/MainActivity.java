@@ -32,6 +32,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URL;
@@ -384,7 +385,16 @@ public class MainActivity extends AppCompatActivity {
 
         File fileCacheItem = new File(getDataDir()+"/images/temp.jpg");
         OutputStream out = null;
-
+        if(!fileCacheItem.exists()) {
+            try {
+                FileWriter fw;
+                fw = new FileWriter(fileCacheItem);
+                fw.write("What should I do is always study.\nhehe");
+                fw.flush();
+            } catch (IOException e3) {
+                e3.printStackTrace();
+            }
+        }
         try
         {
             fileCacheItem.createNewFile();
@@ -417,6 +427,17 @@ public class MainActivity extends AppCompatActivity {
 
             File fileCacheItem = new File(getDataDir()+"/images/temp.jpg");
             OutputStream out = null;
+            if(!fileCacheItem.exists()) {
+                try {
+                    FileWriter fw;
+                    fw = new FileWriter(fileCacheItem);
+                    fw.write("What should I do is always study.\nhehe");
+                    fw.flush();
+                } catch (IOException e3) {
+                    e3.printStackTrace();
+                }
+            }
+
 
             try
             {
