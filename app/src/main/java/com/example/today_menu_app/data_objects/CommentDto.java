@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 public class CommentDto {
     @SerializedName("content") private String content;
-    @SerializedName("date") private String date;
+    @SerializedName("date_written") private String date;
     public CommentDto(String content, String date){
         this.content=content;
         this.date=date;

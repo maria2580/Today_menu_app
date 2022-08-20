@@ -46,6 +46,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CustomVi
 
     }
 
+
     @Override
     public int getItemCount() {
         return (arrayList!=null ? arrayList.size():0);

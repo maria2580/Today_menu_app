@@ -3,12 +3,15 @@ package com.example.today_menu_app.network;
 
 import android.util.Log;
 
+import com.example.today_menu_app.comment_recycler.CommentData;
 import com.example.today_menu_app.data_objects.CommentDto;
 import com.example.today_menu_app.data_objects.CommentsDto;
 import com.example.today_menu_app.data_objects.SuggestionDto;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -117,7 +120,10 @@ public class CallRetrofit {
 
     }
     public static CommentsDto get_comments(String day){
-        CommentsDto commentsDto=null;
+        CommentsDto commentsDto = new CommentsDto();
+        String [] arr=new String[1];
+        arr[0]="댓글이 없습니다";
+        commentsDto.setContent(arr);
         boolean result;
         Retrofit retrofit = RetrofitClient.getInstance();
         RetrofitAPI service= retrofit.create(RetrofitAPI.class);
@@ -129,8 +135,12 @@ public class CallRetrofit {
 
         //Retrofit 호출
 
-
-
+        if (commentsDto.getContent().length==0){
+            commentsDto=new CommentsDto();
+            arr=new String[1];
+            arr[0]="댓글이 없습니다";
+            commentsDto.setContent(arr);
+        }
         return commentsDto;
     }
     public static void post_suggestions(String content, String date){
