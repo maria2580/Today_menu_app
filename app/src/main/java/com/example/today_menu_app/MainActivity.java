@@ -603,12 +603,16 @@ public class MainActivity extends AppCompatActivity {
         }
         this.arrayList=new ArrayList<>();
         mainAdapter = new CommentAdapter(arrayList);
+
         for(int i = 0; i<data.getComments_Data().length; i++){
             System.out.println("댓글 어레이리스트에 넣는중  "+i+"개");
             this.arrayList.add(new CommentData(arrayList.size(),data.getComments_Data()[i].getContent(),data.getComments_Data()[i].getDate()));
             System.out.println("어레이 추가됨 : "+ arrayList.get(i).getContent()+" "+ arrayList.get(i).getDate_written());
         }
-        linearLayoutManager = new LinearLayoutManager(this);
+
+        mainAdapter = new CommentAdapter(arrayList);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setAdapter(mainAdapter);
         mainAdapter.notifyDataSetChanged();
 
     }
