@@ -35,11 +35,13 @@ public class CallRetrofit {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
                 Log.e("uploadChat()", "성공 : ");
+
             }
 
             @Override
             public void onFailure(Call<String> call, Throwable t) {
                 Log.e("uploadChat()", "에러 : " + t.getMessage());
+
             }
         });
     }
@@ -55,11 +57,13 @@ public class CallRetrofit {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
                 Log.e("uploadChat()", "성공 : ");
+
             }
 
             @Override
             public void onFailure(Call<String> call, Throwable t) {
                 Log.e("uploadChat()", "에러 : " + t.getMessage());
+
             }
         });
     }
@@ -108,6 +112,7 @@ public class CallRetrofit {
                 if(response.isSuccessful()){
                     CommentDto result= response.body();
                     Log.d("연결이 성공적 : ", response.body().getContent());
+
                     return;
                 }
                 Log.e("연결이 비정상적 : ", "error code : " + response.code());
