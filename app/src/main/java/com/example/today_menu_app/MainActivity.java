@@ -6,6 +6,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.format.DateUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,6 +17,8 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -31,6 +34,10 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.FieldPosition;
+import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -112,14 +119,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         int check=0;
         data=Data_on_changed.get_instance();
-        //System.out.println("hihihihihihi   :    where?    ---> "+ (check++)+ " " + getTaskId() );//1번
+       //System.out.println("hihihihihihi   :    where?    ---> "+ (check++)+ " " + getTaskId() );//1번
         observer=new Observer() {
             @Override
             public void update(Observable observable, Object o) {
-                //System.out.println("MainActivity.update");
+               //System.out.println("MainActivity.update");
                 data=(Data_on_changed) observable;
                 if (intiated<3){
-                    //System.out.println("MainActivity.update   initiated = "+intiated);
+                   //System.out.println("MainActivity.update   initiated = "+intiated);
                     intiated++;
                     return;
                 }
@@ -133,7 +140,7 @@ public class MainActivity extends AppCompatActivity {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         today = sdf.format(new Date(now));//안드로이드에서 날짜 받아오는 함수 사용할 예정
         day = today;
-        //System.out.println("hihihihihihi   :    where?    ---> "+ check++);//2번
+       //System.out.println("hihihihihihi   :    where?    ---> "+ check++);//2번
 
 
 
@@ -162,7 +169,7 @@ public class MainActivity extends AppCompatActivity {
         this.arrayList =new ArrayList<CommentData>();
         mainAdapter = new CommentAdapter(this.arrayList);
         recyclerView.setAdapter(mainAdapter);
-        //System.out.println("hihihihihihi   :    where?    ---> "+ check++);//3번
+       //System.out.println("hihihihihihi   :    where?    ---> "+ check++);//3번
         //getMenu_on_web(day);
         get_lunch_image_on_DB(day);
         get_dinner_image_on_DB(day);
@@ -177,7 +184,7 @@ public class MainActivity extends AppCompatActivity {
         };
        ttt.start();
        try {ttt.join();}catch (Exception e) {e.printStackTrace();}
-        //System.out.println("hihihihihihi   :    where?    ---> "+ check++);//4번
+       //System.out.println("hihihihihihi   :    where?    ---> "+ check++);//4번
 
        // mainAdapter.notifyDataSetChanged();
          // data.getCustomObservable().notifyObservers();
@@ -263,8 +270,8 @@ public class MainActivity extends AppCompatActivity {
         button_claim.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //sendRequest(day);
-                setCommentOnLayout(day);
+                sendRequest(day);
+                //setCommentOnLayout(day);
             }
         });
         button_add_comment.setOnClickListener(new View.OnClickListener() {
@@ -280,7 +287,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     void getMenu_on_web(String day){
-        //System.out.println("MainActivity.getMenu_on_web");
+       //System.out.println("MainActivity.getMenu_on_web");
         data.setMenu_lunch("메뉴 불러오는 중");
         data.setMenu_dinner("메뉴 불러오는 중");
         textview_day.setText(day);
@@ -331,7 +338,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        //System.out.println("year, month, week, dd, realstart, realend, now"+ year+" " +month+" "+week+" "+dd+" "+realstart+" "+realend+" "+now);
+       //System.out.println("year, month, week, dd, realstart, realend, now"+ year+" " +month+" "+week+" "+dd+" "+realstart+" "+realend+" "+now);
 
         try {
 
@@ -351,7 +358,7 @@ public class MainActivity extends AppCompatActivity {
                     data.setMenu_lunch(e.text());
                     data.setMenu_dinner(e2.text());
 
-                    //System.out.println("true로 진입했습니다" + "menu_lunch" + data.getMenu_lunch() + "\n" + element3.text());
+                   //System.out.println("true로 진입했습니다" + "menu_lunch" + data.getMenu_lunch() + "\n" + element3.text());
                     break;
                 }
                 if (i == 1) {
@@ -375,7 +382,7 @@ public class MainActivity extends AppCompatActivity {
     }//날짜 값을 주면 식단 불러와서 레이아웃에 추가해주는 함수, 예지파트
 
     void getImageOnLocal(int targetImage,String day) {
-        //System.out.println("MainActivity.getImageOnLocal");
+       //System.out.println("MainActivity.getImageOnLocal");
         this.targetImage=targetImage;
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType("image/*");
@@ -383,7 +390,7 @@ public class MainActivity extends AppCompatActivity {
     }//해당 날짜의 식단 사진을 업로드 하는 메서드,예지
 
     void set_lunch_image_on_DB(String day) {
-        //System.out.println("MainActivity.set_lunch_image_on_DB");
+       //System.out.println("MainActivity.set_lunch_image_on_DB");
         BitmapDrawable drawable =targetImage==1?(BitmapDrawable) imageView.getDrawable():(BitmapDrawable)imageView2.getDrawable();//todo 여기서 문제가 발생하느 것 가틍ㅁ
         Bitmap bitmap=drawable.getBitmap();
         File file = new File(getCacheDir()+"/images");
@@ -405,14 +412,14 @@ public class MainActivity extends AppCompatActivity {
             fileCacheItem.createNewFile();
             int quality = 100;
             int i = 2;
-            System.out.println("MainActivity.set_lunch_image_on_DB   1" + " " + fileCacheItem.length());
-            System.out.println("MainActivity.set_lunch_image_on_DB   1" + " " + Files.size(fileCacheItem.toPath()));
+           //System.out.println("MainActivity.set_lunch_image_on_DB   1" + " " + fileCacheItem.length());
+           //System.out.println("MainActivity.set_lunch_image_on_DB   1" + " " + Files.size(fileCacheItem.toPath()));
             do {
                 try {
                     bitmap=drawable.getBitmap();
                     out = new FileOutputStream(fileCacheItem);
                     bitmap.compress(Bitmap.CompressFormat.JPEG, quality, out);
-                    System.out.println("MainActivity.set_lunch_image_on_DB  " + (i++) + " " + bitmap.getByteCount());
+                   //System.out.println("MainActivity.set_lunch_image_on_DB  " + (i++) + " " + bitmap.getByteCount());
                     quality = quality - 5;
                     if (quality < 5) {
                         break;
@@ -430,7 +437,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
     void set_dinner_image_on_DB(String day) {
-        //System.out.println("MainActivity.set_dinner_image_on_DB");
+       //System.out.println("MainActivity.set_dinner_image_on_DB");
         BitmapDrawable drawable =targetImage==1?(BitmapDrawable) imageView.getDrawable():(BitmapDrawable)imageView2.getDrawable();
         Bitmap bitmap=drawable.getBitmap();
         File file = new File(getCacheDir()+"/images");
@@ -475,8 +482,8 @@ public class MainActivity extends AppCompatActivity {
 
     }
     void get_lunch_image_on_DB(String day){
-        //System.out.println("MainActivity.get_lunch_image_on_DB");
-        //System.out.println(image_uri);
+       //System.out.println("MainActivity.get_lunch_image_on_DB");
+       //System.out.println(image_uri);
         Get_Lunch_image_Thread t = new Get_Lunch_image_Thread();
         t.day =day;
         t.start();
@@ -484,10 +491,10 @@ public class MainActivity extends AppCompatActivity {
             t.join();
         }catch (Exception e){e.printStackTrace();}
         data.setBitmap_lunch(t.bitmap);
-        //System.out.println("MainActivity.get_lunch_image_on_DB");
+       //System.out.println("MainActivity.get_lunch_image_on_DB");
     }
     void get_dinner_image_on_DB(String day){
-        //System.out.println("MainActivity.get_dinner_image_on_DB");
+       //System.out.println("MainActivity.get_dinner_image_on_DB");
         Get_Dinner_image_Thread t = new Get_Dinner_image_Thread();
         t.day =day;
         t.start();
@@ -571,46 +578,85 @@ public class MainActivity extends AppCompatActivity {
         data.setComment_Data(null , null);
         //DB에서 댓글을 불러와서 스트링배열로 반환하는 메서드, 세진
         //해당 날짜의 댓글 DB에서 댓글 갯수를 먼저 읽어와서 인트형 변수로 저장하는 명령 작성
-        //System.out.println("get comments 함수 시작");
+       //System.out.println("get comments 함수 시작");
         CommentsDto commentsDto= CallRetrofit.get_comments(day);
 
-        //System.out.println("REST GET 요청 완료 to "+day);
-        //System.out.println("상태 체크 of commentDto is "+commentsDto);
+       //System.out.println("REST GET 요청 완료 to "+day);
+       //System.out.println("상태 체크 of commentDto is "+commentsDto);
         try {
             data.setComment_Data(commentsDto.getContent(), commentsDto.getWritten_time());
         }
         catch (Exception e){
-            //System.out.println("이 문구가 나오면 스프링 서버가 작동중이지 않을 가능성이 높습니다.");
-            //System.out.println("따라서 댓글이 보이지 않는게 정상입니다.");
+           //System.out.println("이 문구가 나오면 스프링 서버가 작동중이지 않을 가능성이 높습니다.");
+           //System.out.println("따라서 댓글이 보이지 않는게 정상입니다.");
             data.setComment_Data(new String[1],new String[1]);
           }
-//        System.out.println("DTO에 담긴 내용 복사 "+data.getComments_Data());
-//        try {
-//            for (int i = 0; i < data.getComments_Data().length; i++) {
-//                System.out.println("댓글 " + i + " " + data.getComments_Data()[i].getContent()+"쓰인 시간: "+ data.getComments_Data()[i].getDate());
-//            }
-//        }catch (Exception e){
-//            e.printStackTrace();
-//        }
+       //System.out.println("DTO에 담긴 내용 복사 "+data.getComments_Data());
+        try {
+            for (int i = 0; i < data.getComments_Data().length; i++) {
+               //System.out.println("댓글 " + i + " " + data.getComments_Data()[i].getContent()+"쓰인 시간: "+ data.getComments_Data()[i].getDate());
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         return;
     }
 
     void setCommentOnLayout(String day){
-        //System.out.println("MainActivity.setCommentOnLayout");
+       //System.out.println("MainActivity.setCommentOnLayout");
         //화면이 처음뜰때, 새로고침 버튼을 눌렀을 떄 호출 됨.
         // 댓글을 strings에 불러온 상태.
         // 이 아래로 화면에 추가해주는 코드 작성 바람, 은비 담당
-        //System.out.println("!!! 댓글 데이터 재 출력!!!!");
+       //System.out.println("!!! 댓글 데이터 재 출력!!!!");
         if (data.getComments_Data()==null){
             return;
         }
         this.arrayList=new ArrayList<>();
         mainAdapter = new CommentAdapter(arrayList);
 
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
+        long t_now=System.currentTimeMillis();
+        long here =new Date(t_now).getTime();
+
         for(int i = 0; i<data.getComments_Data().length; i++){
-            //System.out.println("댓글 어레이리스트에 넣는중  "+i+"개");
-            this.arrayList.add(new CommentData(arrayList.size(),data.getComments_Data()[i].getContent(),data.getComments_Data()[i].getDate()));
-            //System.out.println("어레이 추가됨 : "+ arrayList.get(i).getContent()+" "+ arrayList.get(i).getDate_written());
+           //System.out.println("댓글 어레이리스트에 넣는중  "+i+"개");
+            String target=data.getComments_Data()[i].getDate();
+            try {
+                Date date = sdf.parse(target);
+                long written = date.getTime();
+
+                long cha = here - written;// - DateUtils.HOUR_IN_MILLIS*9;
+                String temppp = sdf.format(new Date(cha));
+               //System.out.println("현재 시간 -댓글 쓴 시간 : " + cha + "  " + "날짜 변환시 : " + temppp);
+                String yy = data.getComments_Data()[i].getDate().substring(2, 4);
+                String MM = data.getComments_Data()[i].getDate().substring(5, 7);
+                String dd = data.getComments_Data()[i].getDate().substring(8, 10);
+                String hh = data.getComments_Data()[i].getDate().substring(11, 13);
+                String mm = data.getComments_Data()[i].getDate().substring(14, 16);
+                String ss = data.getComments_Data()[i].getDate().substring(17, 19);
+                if (cha / DateUtils.YEAR_IN_MILLIS == 0)
+                    if (cha / (DateUtils.DAY_IN_MILLIS * 30) == 0)
+                        if (cha / DateUtils.DAY_IN_MILLIS == 0)
+                            if (cha / DateUtils.HOUR_IN_MILLIS == 0)
+                                if (cha / DateUtils.MINUTE_IN_MILLIS == 0)
+                                    target = (cha / 1000) + "초 전";
+                                else
+                                    target = (cha / DateUtils.MINUTE_IN_MILLIS) + "분 전";
+                            else
+                                target = (cha / DateUtils.HOUR_IN_MILLIS) + "시간 전";
+                        else
+                            target = (cha / DateUtils.DAY_IN_MILLIS) + "일 전";
+                    else
+                        target = mm + "월 " + dd + "일 " + hh + ":" + mm;
+                else
+                    target = yy + "년 " + mm + "월 " + dd + "일 " + hh + ":" + mm;
+
+
+            }
+            catch (Exception e){}
+
+            this.arrayList.add(new CommentData(arrayList.size(),data.getComments_Data()[i].getContent(),target));
+           //System.out.println("어레이 추가됨 : "+ arrayList.get(i).getContent()+" "+ arrayList.get(i).getDate_written());
         }
 
         mainAdapter = new CommentAdapter(arrayList);
@@ -622,9 +668,9 @@ public class MainActivity extends AppCompatActivity {
     void addComment(final String mycontent,String day){
         if(mycontent.length()<3){
             return;}
-        //System.out.println("MainActivity.addComment");
+       //System.out.println("MainActivity.addComment");
         CallRetrofit.post_comment(mycontent,day);
-        //System.out.println("댓글 추가 완료: ");
+       //System.out.println("댓글 추가 완료: ");
         arrayList.add(new CommentData(arrayList.size(),mycontent,day));
 
         mainAdapter.notifyDataSetChanged();
@@ -633,7 +679,7 @@ public class MainActivity extends AppCompatActivity {
 
     }//메서드가 실행되면 매개변수의 스트링이 DB로 보내지는 함수, 세진
     void update_changes_on_layout(){
-        //System.out.println("MainActivity.update_changes_on_layout");
+       //System.out.println("MainActivity.update_changes_on_layout");
         textview_day.setText(day);
         imageView.setImageBitmap(data.getBitmap_lunch());
         imageView2.setImageBitmap(data.getBitmap_dinner());
