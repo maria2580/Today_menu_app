@@ -32,10 +32,6 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CustomVi
     @Override
     public void onBindViewHolder(@NonNull CustomViewHolder holder, int position) {
         //실제 추가될 떄의 생명주기
-        holder.tv_ID.setText(String.format("%d",arrayList.get(position).getID()));
-        holder.tv_Content.setText(arrayList.get(position).getContent());
-        holder.tv_Date_written.setText(arrayList.get(position).getDate_written());
-
         holder.itemView.setTag(position);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -43,7 +39,13 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CustomVi
 
             }
         });
-
+        if (arrayList.get(position).getContent().equals("댓글이 없습니다")){
+            holder.tv_Content.setText(arrayList.get(position).getContent());//만약 댓글이 없는 것으로 보이면 익명 %d 를 레이아웃에 추가 하지 않고 함수 종료
+            return;
+        }
+        holder.tv_ID.setText(String.format("익명 %d",arrayList.get(position).getID()));
+        holder.tv_Content.setText(arrayList.get(position).getContent());
+        holder.tv_Date_written.setText(arrayList.get(position).getDate_written());
     }
 
 
