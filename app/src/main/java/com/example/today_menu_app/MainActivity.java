@@ -2,6 +2,7 @@ package com.example.today_menu_app;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -23,15 +24,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import org.apache.commons.io.IOUtils;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.sql.Timestamp;
@@ -40,6 +44,7 @@ import java.text.FieldPosition;
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Observable;
@@ -170,7 +175,7 @@ public class MainActivity extends AppCompatActivity {
         mainAdapter = new CommentAdapter(this.arrayList);
         recyclerView.setAdapter(mainAdapter);
        //System.out.println("hihihihihihi   :    where?    ---> "+ check++);//3번
-        //getMenu_on_web(day);
+        getMenu_on_web(day);
         get_lunch_image_on_DB(day);
         get_dinner_image_on_DB(day);
        Thread ttt= new Thread(){
@@ -197,7 +202,7 @@ public class MainActivity extends AppCompatActivity {
                 day = sdf.format(new Date(now));//함수 호출로 day값 상승 하강 시키는 함수 만들 예정임
                 arrayList=new ArrayList<CommentData>();
 
-                //getMenu_on_web(day);
+                getMenu_on_web(day);
                 get_lunch_image_on_DB(day);
                 get_dinner_image_on_DB(day);
                 Thread ttt= new Thread(){
@@ -222,7 +227,7 @@ public class MainActivity extends AppCompatActivity {
                 now+=t;
                 day = sdf.format(new Date(now));
                 arrayList=(new ArrayList<CommentData>());
-                //getMenu_on_web(day);
+                getMenu_on_web(day);
                 get_lunch_image_on_DB(day);
                 get_dinner_image_on_DB(day);
                 Thread ttt= new Thread(){
@@ -393,7 +398,7 @@ public class MainActivity extends AppCompatActivity {
        //System.out.println("MainActivity.set_lunch_image_on_DB");
         BitmapDrawable drawable =targetImage==1?(BitmapDrawable) imageView.getDrawable():(BitmapDrawable)imageView2.getDrawable();//todo 여기서 문제가 발생하느 것 가틍ㅁ
         Bitmap bitmap=drawable.getBitmap();
-        File file = new File(getCacheDir()+"/images");
+       /* File file = new File(getCacheDir()+"/images");
         file.mkdirs();
         File fileCacheItem = new File(getCacheDir()+"/images/temp.jpg");
 
@@ -432,15 +437,16 @@ public class MainActivity extends AppCompatActivity {
         }
         catch (Exception e) {
             e.printStackTrace();
-        }
-        CallRetrofit.post_image_L(fileCacheItem, day);
+        }*/
+        String encodedImage=BitmapToString(bitmap);
+        CallRetrofit.post_image_L(encodedImage, day);
 
     }
     void set_dinner_image_on_DB(String day) {
        //System.out.println("MainActivity.set_dinner_image_on_DB");
         BitmapDrawable drawable =targetImage==1?(BitmapDrawable) imageView.getDrawable():(BitmapDrawable)imageView2.getDrawable();
         Bitmap bitmap=drawable.getBitmap();
-        File file = new File(getCacheDir()+"/images");
+        /*File file = new File(getCacheDir()+"/images");
 
         file.mkdirs();
         File fileCacheItem = new File(getCacheDir()+"/images/temp.jpg");
@@ -477,10 +483,28 @@ public class MainActivity extends AppCompatActivity {
         }
         catch (Exception e) {
             e.printStackTrace();
-        }
-        CallRetrofit.post_image_D(fileCacheItem, day);
-
+        }*/
+        String encodedImage=BitmapToString(bitmap);
+        CallRetrofit.post_image_D(encodedImage, day);
     }
+    public static String BitmapToString(Bitmap bitmap) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 70, baos);
+        byte[] bytes = baos.toByteArray();
+        String temp = Base64.getEncoder().encodeToString(bytes);
+        return temp;
+    }
+    public static Bitmap StringToBitmap(String encodedString) {
+        try {
+            byte[] encodeByte = Base64.getDecoder().decode(encodedString);
+            Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+            return bitmap;
+        } catch (Exception e) {
+            e.getMessage();
+            return null;
+        }
+    }
+
     void get_lunch_image_on_DB(String day){
        //System.out.println("MainActivity.get_lunch_image_on_DB");
        //System.out.println(image_uri);
@@ -684,13 +708,13 @@ public class MainActivity extends AppCompatActivity {
         imageView.setImageBitmap(data.getBitmap_lunch());
         imageView2.setImageBitmap(data.getBitmap_dinner());
 
-        if(data.getMenu_lunch()==null){
+        if(data.getMenu_lunch()==null||data.getMenu_lunch().equals("")){
             textMenu.setText("메뉴가 없습니다");
         }
         else{
             textMenu.setText(data.getMenu_lunch());
         }
-        if(data.getMenu_dinner()==null){
+        if(data.getMenu_dinner()==null||data.getMenu_dinner().equals("")){
             textMenu2.setText("메뉴가 없습니다");
         }
         else{

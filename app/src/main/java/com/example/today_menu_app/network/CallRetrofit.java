@@ -12,6 +12,7 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.SplittableRandom;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -23,14 +24,14 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 public class CallRetrofit {
-    public static void post_image_L(File imageFile, String date){
-        RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), imageFile);//(image/jpeg)로도 시도할 것
-        MultipartBody.Part multi_file = MultipartBody.Part.createFormData("file", imageFile.getName(), requestFile);
+    public static void post_image_L(String encodedImage, String date){
+        /*RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), imageFile);//(image/jpeg)로도 시도할 것
+        MultipartBody.Part multi_file = MultipartBody.Part.createFormData("file", imageFile.getName(), requestFile);*/
 
 
         Retrofit retrofit = RetrofitClient.getInstance();
         RetrofitAPI service= retrofit.create(RetrofitAPI.class);
-        Call<String> call = service.postImage_L(multi_file,date);
+        Call<String> call = service.postImage_L(encodedImage,date);
         call.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
@@ -45,14 +46,14 @@ public class CallRetrofit {
             }
         });
     }
-    public static void post_image_D(File imageFile, String date){
+    public static void post_image_D(String encodedImage, String date){/*
         RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), imageFile);
-        MultipartBody.Part multi_file = MultipartBody.Part.createFormData("file", imageFile.getName(), requestFile);
+        MultipartBody.Part multi_file = MultipartBody.Part.createFormData("file", imageFile.getName(), requestFile);*/
 
 
         Retrofit retrofit = RetrofitClient.getInstance();
         RetrofitAPI service= retrofit.create(RetrofitAPI.class);
-        Call<String> call = service.postImage_D(multi_file,date);
+        Call<String> call = service.postImage_D(encodedImage,date);
         call.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
@@ -67,12 +68,12 @@ public class CallRetrofit {
             }
         });
     }
-    public static byte[] get_image_L(String date) throws IOException {
+    public static String get_image_L(String date) {
 
         Retrofit retrofit = RetrofitClient.getInstance();
         RetrofitAPI service= retrofit.create(RetrofitAPI.class);
-        Call<ResponseBody> call = service.getImage_L(date);
-        ResponseBody response = null;
+        Call<String> call = service.getImage_L(date);
+        String response = null;
         try {
             response= call.execute().body();
 
@@ -80,19 +81,19 @@ public class CallRetrofit {
             e.printStackTrace();
         }
 
-        return response.bytes();
+        return response;
     }
-    public static byte[] get_image_D(String date) throws IOException {
+    public static String get_image_D(String date)  {
         Retrofit retrofit = RetrofitClient.getInstance();
         RetrofitAPI service= retrofit.create(RetrofitAPI.class);
-        Call<ResponseBody> call = service.getImage_D(date);
-        ResponseBody response = null;
+        Call<String> call = service.getImage_D(date);
+        String response = null;
         try {
             response= call.execute().body();
         }catch (Exception e){
             e.printStackTrace();
         }
-        return response.bytes();
+        return response;
     }
 
 

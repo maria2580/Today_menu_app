@@ -4,6 +4,8 @@ import com.example.today_menu_app.data_objects.CommentDto;
 import com.example.today_menu_app.data_objects.CommentsDto;
 import com.example.today_menu_app.data_objects.SuggestionDto;
 
+import java.util.SplittableRandom;
+
 import okhttp3.MultipartBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -28,20 +30,20 @@ public interface RetrofitAPI {
     @POST("add/Suggestion/{date}")
     Call<SuggestionDto>postsuggestion(@Body String content, @Path("date") String date);
 
-    @Multipart
-    @POST("add/images/lunch/{date}")
-    Call<String> postImage_L(@Part MultipartBody.Part file,@Path("date") String date);
 
-    @Multipart
+    @POST("add/images/lunch/{date}")
+    Call<String> postImage_L(@Body String encoded_image,@Path("date") String date);
+
+
     @POST("add/images/dinner/{date}")
-    Call<String> postImage_D(@Part MultipartBody.Part file,@Path("date") String date);
+    Call<String> postImage_D(@Body String encoded_image,@Path("date") String date);
 
 
     @GET("images/lunch/{date}")
-    Call<ResponseBody> getImage_L(@Path("date") String date);
+    Call<String> getImage_L(@Path("date") String date);
 
 
     @GET("images/dinner/{date}")
-    Call<ResponseBody> getImage_D(@Path("date") String date);
+    Call<String> getImage_D(@Path("date") String date);
 
 }
