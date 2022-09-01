@@ -3,11 +3,32 @@ package com.example.today_menu_app.network;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
+import com.example.today_menu_app.Data_on_changed;
+
 import java.util.Base64;
+import java.util.concurrent.SynchronousQueue;
+
+import com.example.today_menu_app.Data_on_changed;
 
 public class Get_Dinner_image_Thread extends Thread{
     public String day;
     public Bitmap bitmap;
+    private static Get_Dinner_image_Thread thread;
+    private Get_Dinner_image_Thread(){super();}
+    public static Get_Dinner_image_Thread getInstance(){
+        if (thread==null){
+            synchronized (Get_Dinner_image_Thread.class){
+                if (thread==null){
+                    thread=new Get_Dinner_image_Thread();
+                }
+            }
+        }
+        return thread;
+    }
+    public static Get_Dinner_image_Thread newInstance(){
+        thread =new Get_Dinner_image_Thread();
+        return thread;
+    }
     @Override
     public void run() {
         super.run();
@@ -19,7 +40,7 @@ public class Get_Dinner_image_Thread extends Thread{
             e.printStackTrace();
         }
         bitmap = StringToBitmap(encodedImage);
-
+        Data_on_changed.get_instance().setBitmap_dinner(bitmap);
     }
     public static Bitmap StringToBitmap(String encodedString) {
         try {

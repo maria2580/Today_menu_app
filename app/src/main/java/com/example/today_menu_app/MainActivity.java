@@ -18,30 +18,15 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import org.apache.commons.io.IOUtils;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.Reader;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.sql.Timestamp;
-import java.text.DateFormat;
-import java.text.FieldPosition;
-import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Base64;
@@ -57,9 +42,8 @@ import com.example.today_menu_app.SQLite.MyDBhelper;
 import com.example.today_menu_app.comment_recycler.CommentAdapter;
 import com.example.today_menu_app.comment_recycler.CommentData;
 import com.example.today_menu_app.crawling.MyThread;
-import com.example.today_menu_app.data_objects.CommentDto;
-import com.example.today_menu_app.data_objects.CommentsDto;
 import com.example.today_menu_app.network.CallRetrofit;
+import com.example.today_menu_app.network.Get_Comments_Thread;
 import com.example.today_menu_app.network.Get_Dinner_image_Thread;
 import com.example.today_menu_app.network.Get_Lunch_image_Thread;
 
@@ -129,13 +113,19 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void update(Observable observable, Object o) {
                //System.out.println("MainActivity.update");
-                data=(Data_on_changed) observable;
-                if (intiated<3){
-                   //System.out.println("MainActivity.update   initiated = "+intiated);
-                    intiated++;
-                    return;
-                }
-                update_changes_on_layout();
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        data=(Data_on_changed) observable;
+                        if (intiated<3){
+                            //System.out.println("MainActivity.update   initiated = "+intiated);
+                            intiated++;
+                            return;
+                        }
+                        update_changes_on_layout();
+                    }
+                });
             }
         };
         data.addObserver(observer);
@@ -508,24 +498,29 @@ public class MainActivity extends AppCompatActivity {
     void get_lunch_image_on_DB(String day){
        //System.out.println("MainActivity.get_lunch_image_on_DB");
        //System.out.println(image_uri);
-        Get_Lunch_image_Thread t = new Get_Lunch_image_Thread();
+        Get_Lunch_image_Thread t = Get_Lunch_image_Thread.getInstance();
+        if(t.isAlive()){
+            try {
+                t.interrupt();
+            }catch (Exception e){}
+        }
+        t=Get_Lunch_image_Thread.newInstance();
         t.day =day;
         t.start();
-        try {
-            t.join();
-        }catch (Exception e){e.printStackTrace();}
-        data.setBitmap_lunch(t.bitmap);
        //System.out.println("MainActivity.get_lunch_image_on_DB");
     }
     void get_dinner_image_on_DB(String day){
        //System.out.println("MainActivity.get_dinner_image_on_DB");
-        Get_Dinner_image_Thread t = new Get_Dinner_image_Thread();
+        Get_Dinner_image_Thread t = Get_Dinner_image_Thread.getInstance();
+        if(t.isAlive()){
+            try {
+                t.sleep(100);
+                t.interrupt();
+            }catch (Exception e){}
+        }
+        t=Get_Dinner_image_Thread.newInstance();
         t.day =day;
         t.start();
-        try {
-            t.join();
-        }catch (Exception e){e.printStackTrace();}
-        data.setBitmap_dinner(t.bitmap);
     }
 
     void sendVoteUp(String day){
@@ -598,32 +593,15 @@ public class MainActivity extends AppCompatActivity {
 
 
     void getCommentStrings(String day){
-
-        data.setComment_Data(null , null);
-        //DB에서 댓글을 불러와서 스트링배열로 반환하는 메서드, 세진
-        //해당 날짜의 댓글 DB에서 댓글 갯수를 먼저 읽어와서 인트형 변수로 저장하는 명령 작성
-       //System.out.println("get comments 함수 시작");
-        CommentsDto commentsDto= CallRetrofit.get_comments(day);
-
-       //System.out.println("REST GET 요청 완료 to "+day);
-       //System.out.println("상태 체크 of commentDto is "+commentsDto);
-        try {
-            data.setComment_Data(commentsDto.getContent(), commentsDto.getWritten_time());
+        Get_Comments_Thread t = Get_Comments_Thread.getInstance();
+        if(t.isAlive()){
+            try {
+                t.interrupt();
+            }catch (Exception e){}
         }
-        catch (Exception e){
-           //System.out.println("이 문구가 나오면 스프링 서버가 작동중이지 않을 가능성이 높습니다.");
-           //System.out.println("따라서 댓글이 보이지 않는게 정상입니다.");
-            data.setComment_Data(new String[1],new String[1]);
-          }
-       //System.out.println("DTO에 담긴 내용 복사 "+data.getComments_Data());
-        try {
-            for (int i = 0; i < data.getComments_Data().length; i++) {
-               //System.out.println("댓글 " + i + " " + data.getComments_Data()[i].getContent()+"쓰인 시간: "+ data.getComments_Data()[i].getDate());
-            }
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        return;
+        t=Get_Comments_Thread.newInstance();
+        t.day =day;
+        t.start();
     }
 
     void setCommentOnLayout(String day){
@@ -674,8 +652,6 @@ public class MainActivity extends AppCompatActivity {
                         target = mm + "월 " + dd + "일 " + hh + ":" + mm;
                 else
                     target = yy + "년 " + mm + "월 " + dd + "일 " + hh + ":" + mm;
-
-
             }
             catch (Exception e){}
 
