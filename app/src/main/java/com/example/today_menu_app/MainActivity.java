@@ -192,6 +192,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 DialogFragment fragment = new DatePickerFragment();
+                fragment.show(getSupportFragmentManager(),"datePicker");
             }
         });
 
@@ -201,22 +202,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 long t=86400000;//하루
                 now-=t;
-                day = sdf.format(new Date(now));//함수 호출로 day값 상승 하강 시키는 함수 만들 예정임
-                arrayList=new ArrayList<CommentData>();
-
-                getMenu_on_web(day);
-                get_lunch_image_on_DB(day);
-                get_dinner_image_on_DB(day);
-                Thread ttt= new Thread(){
-                    @Override
-                    public void run() {
-                        super.run();
-                        getCommentStrings(day);
-                    }
-                };
-                ttt.start();
-                try {ttt.join();}catch (Exception e) {e.printStackTrace();}
-
+                update_data();
                 //mainAdapter.notifyDataSetChanged();
                 //data.notifyObservers();
             }
@@ -227,20 +213,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 long t=86400000;//하루
                 now+=t;
-                day = sdf.format(new Date(now));
-                arrayList=(new ArrayList<CommentData>());
-                getMenu_on_web(day);
-                get_lunch_image_on_DB(day);
-                get_dinner_image_on_DB(day);
-                Thread ttt= new Thread(){
-                    @Override
-                    public void run() {
-                        super.run();
-                        getCommentStrings(day);
-                    }
-                };
-                ttt.start();
-                try {ttt.join();}catch (Exception e) {e.printStackTrace();}
+                update_data();
 
                 //mainAdapter.notifyDataSetChanged();
                 //data.notifyObservers();
@@ -291,7 +264,23 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
-
+    void update_data(){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        day = sdf.format(new Date(now));
+        arrayList=(new ArrayList<CommentData>());
+        getMenu_on_web(day);
+        get_lunch_image_on_DB(day);
+        get_dinner_image_on_DB(day);
+        Thread ttt= new Thread(){
+            @Override
+            public void run() {
+                super.run();
+                getCommentStrings(day);
+            }
+        };
+        ttt.start();
+        try {ttt.join();}catch (Exception e) {e.printStackTrace();}
+    }
 
     void getMenu_on_web(String day){
        //System.out.println("MainActivity.getMenu_on_web");
@@ -716,6 +705,7 @@ public class MainActivity extends AppCompatActivity {
         Calendar calendar =Calendar.getInstance();
         calendar.set(y,m,d);
         now = calendar.getTimeInMillis();
+        update_data();
     }
 
 }

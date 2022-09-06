@@ -140,13 +140,16 @@ public class CallRetrofit {
         }catch (Exception e){e.printStackTrace();}
 
         //Retrofit 호출
-
-        if (commentsDto.getContent().length==0){
-            commentsDto=new CommentsDto();
-            arr=new String[1];
-            arr[0]="댓글이 없습니다";
-            commentsDto.setContent(arr);
-        }
+            try {
+                if (commentsDto.getContent().length==0){
+                    commentsDto=new CommentsDto();
+                    arr=new String[1];
+                    arr[0]="댓글이 없습니다";
+                    commentsDto.setContent(arr);
+                }
+            }catch (Exception e){
+                e.printStackTrace();
+            }
         return commentsDto;
     }
     public static void post_suggestions(String content, String date){
