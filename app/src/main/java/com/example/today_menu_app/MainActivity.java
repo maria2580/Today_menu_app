@@ -1,5 +1,6 @@
 package com.example.today_menu_app;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -10,6 +11,7 @@ import android.provider.MediaStore;
 import android.text.format.DateUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -19,6 +21,7 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -134,6 +137,7 @@ public class MainActivity extends AppCompatActivity {
         now = System.currentTimeMillis();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         today = sdf.format(new Date(now));//안드로이드에서 날짜 받아오는 함수 사용할 예정
+
         day = today;
        //System.out.println("hihihihihihi   :    where?    ---> "+ check++);//2번
 
@@ -183,6 +187,14 @@ public class MainActivity extends AppCompatActivity {
 
        // mainAdapter.notifyDataSetChanged();
          // data.getCustomObservable().notifyObservers();
+
+        textview_day.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DialogFragment fragment = new DatePickerFragment();
+            }
+        });
+
 
         button_prev.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -698,5 +710,13 @@ public class MainActivity extends AppCompatActivity {
         }
         setCommentOnLayout(day);
     }
+
+    public void setDatefrompicker(int y, int m , int d){
+        String temp= y+"-"+m+"-"+d;
+        Calendar calendar =Calendar.getInstance();
+        calendar.set(y,m,d);
+        now = calendar.getTimeInMillis();
+    }
+
 }
 
