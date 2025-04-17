@@ -18,7 +18,7 @@ public class MyThread extends Thread {
     @Override
     public void run() {
         super.run();
-        String URL = String.format("https://dormi.kongju.ac.kr/HOME/sub.php?code=041303&currentYear=%s&currentMonth=%s&currentWeekNo=%s&currentWeekStart=%s&currentWeekEnd=%s", year, month, week, realstart, realend);
+        String URL = String.format("https://dormi.kongju.ac.kr/HOME/sub.php?code=041304&currentYear=%s&currentMonth=%s&currentWeekNo=%s&currentWeekStart=%s&currentWeekEnd=%s", year, month, week, realstart, realend);
         try {
 
             doc = Jsoup.connect(URL).get();
