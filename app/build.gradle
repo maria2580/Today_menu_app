@@ -3,12 +3,13 @@ plugins {
 }
 
 android {
-    compileSdk 32
+    compileSdk 33
 
+    namespace "com.example.today_menu_app"
     defaultConfig {
         applicationId "com.example.today_menu_app"
         minSdk 27
-        targetSdk 32
+        targetSdk 33
         versionCode 1
         versionName "1.0"
 
@@ -22,8 +23,8 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_21
+        targetCompatibility JavaVersion.VERSION_21
     }
 }
 
