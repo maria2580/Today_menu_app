@@ -28,7 +28,7 @@
 
 * **메인 화면:**
 
- <div style="display: flex; justify-content: center;"><img src="https://github.com/user-attachments/assets/a4ca6d72-347b-4531-841c-c49c66343426" width="200" ><img src="https://github.com/user-attachments/assets//94ac6e86-35ad-4be8-aefc-5e2babc70515" width="200"></div> 
+ <divstyle="display: flex; justify-content: center;"><img src="https://github.com/user-attachments/assets/a4ca6d72-347b-4531-841c-c49c66343426" width="200" ><img src="https://github.com/user-attachments/assets//94ac6e86-35ad-4be8-aefc-5e2babc70515" width="200"></div> 
 
 
 * **건의하기 화면:**.
