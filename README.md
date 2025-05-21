@@ -28,15 +28,23 @@
 
 * **메인 화면:**
     * 여기에 메인 화면(날짜 네비게이션, 점심/저녁 메뉴 및 사진, 좋아요/싫어요/건의하기 버튼, 댓글 목록, 댓글 입력창 포함) 스크린샷을 넣어주세요.
-    ![메인 화면 예시](여기에_메인화면_이미지_경로)
+    ![메인 화면](https://github.com/user-attachments/assets/a4ca6d72-347b-4531-841c-c49c66343426)
+    ![사진 첨부 이후](https://github.com/user-attachments/assets/94ac6e86-35ad-4be8-aefc-5e2babc70515)
+)
 
 * **건의하기 화면:**
     * 여기에 건의사항 작성 화면(SubActivity) 스크린샷을 넣어주세요.
-    ![건의하기 화면 예시](여기에_건의하기화면_이미지_경로)
+    ![건의사항 작성](https://github.com/user-attachments/assets/f5b3fcc1-e4cb-4cd7-bb5b-c93e28a06dd5)
+    ![건의사항 전송](https://github.com/user-attachments/assets/0f9da268-845a-4253-80fd-a9f863b84295)
+
+
 
 * **날짜 선택 화면:**
     * 여기에 DatePickerFragment를 사용한 날짜 선택 화면 스크린샷을 넣어주세요.
-    ![날짜 선택 화면 예시](여기에_날짜선택화면_이미지_경로)
+    ![날짜 선택 화면 예시](여기에_날짜선택화면_이미지_경로)![날짜 선택1](https://github.com/user-attachments/assets/0deb0d74-db3d-4a3d-b117-681a837ce7d2)
+    ![날짜 선택2](https://github.com/user-attachments/assets/140fe0c1-cf8c-43dc-9fd9-5a9042b818e3)
+   ![날짜선택 이후](https://github.com/user-attachments/assets/bb5b2742-22fd-4188-b3bd-7839b360385c)
+
 
 ## ⚙️ 기술 스택
 
