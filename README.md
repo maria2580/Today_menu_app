@@ -47,6 +47,7 @@
 * **네트워킹:** Retrofit2 (API 통신), Gson (JSON 파싱)
 * **웹 크롤링:** Jsoup
 * **로컬 데이터베이스:** SQLite
+* **백엔드:** Spring Boot+Mysql+oracle cloud infra a2 instance
 * **UI:** RecyclerView, ConstraintLayout, LinearLayout
 * **비동기 처리:** Thread, Handler
 * **데이터 관리:** Observable 패턴 (Custom `Data_on_changed` 클래스)
