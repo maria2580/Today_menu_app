@@ -27,21 +27,21 @@
 
 
 ## 📸 스크린샷
-<table align="center">
-      <tr>
-            <td align="center">
-                  <img src="https://github.com/user-attachments/assets/a4ca6d72-347b-4531-841c-c49c66343426" width="300rem"></img>
-            </td>
-            <td align="center">
-                  <img src="https://github.com/user-attachments/assets/94ac6e86-35ad-4be8-aefc-5e2babc70515" width="300rem"></img>
-            </td>
-            <td align="center">
-                  <img src="https://github.com/user-attachments/assets/f5b3fcc1-e4cb-4cd7-bb5b-c93e28a06dd5" width="300rem"></img>
-            </td>
-            <td align="center">
-                  <img src="https://github.com/user-attachments/assets/0f9da268-845a-4253-80fd-a9f863b84295" width="300rem"></img>
-            </td>
 
+<table align="center">
+        <tr>
+            <td align="center">
+                  <img src="https://github.com/user-attachments/assets/a4ca6d72-347b-4531-841c-c49c66343426" width="300rem">
+            </td>
+            <td align="center">
+                  <img src="https://github.com/user-attachments/assets/94ac6e86-35ad-4be8-aefc-5e2babc70515" width="300rem">
+            </td>
+            <td align="center">
+                  <img src="https://github.com/user-attachments/assets/f5b3fcc1-e4cb-4cd7-bb5b-c93e28a06dd5" width="300rem">
+            </td>
+            <td align="center">
+                  <img src="https://github.com/user-attachments/assets/0f9da268-845a-4253-80fd-a9f863b84295" width="300rem">
+            </td>
       </tr>
       <tr>
             <td align="center">
@@ -53,22 +53,18 @@
             <td align="center">
                   건의하기 화면
             </td>
-            <td align="center">
-                  건의 전송 후(토스트 출력)
-            </td>
       </tr>
 </table>
-
 <table align="center">
       <tr>
             <td align="center">
-                  <img src="https://github.com/user-attachments/assets/0deb0d74-db3d-4a3d-b117-681a837ce7d2" width="300rem" ></img>
+                  <img src="https://github.com/user-attachments/assets/0deb0d74-db3d-4a3d-b117-681a837ce7d2" width="300rem" >
             </td>
             <td align="center">
-                  <img src="https://github.com/user-attachments/assets/140fe0c1-cf8c-43dc-9fd9-5a9042b818e3" width="300rem"></img>
+                  <img src="https://github.com/user-attachments/assets/140fe0c1-cf8c-43dc-9fd9-5a9042b818e3" width="300rem">
             </td>
             <td align="center">
-                    <img src="https://github.com/user-attachments/assets/bb5b2742-22fd-4188-b3bd-7839b360385c" width="300rem"></img>
+                    <img src="https://github.com/user-attachments/assets/bb5b2742-22fd-4188-b3bd-7839b360385c" width="300rem">
             </td>
       </tr>
       <tr>
@@ -83,6 +79,7 @@
             </td>
       </tr>
 </table>   
+
 
 ## ⚙️ 기술 스택
 
@@ -152,4 +149,3 @@
 3.  `network/URL_holder.java` 파일에 실제 운영 중인 백엔드 서버의 Base URL이 정확히 입력되어 있는지 확인합니다.
 4.  에뮬레이터 또는 실제 Android 기기에서 앱을 실행합니다.
 
----
