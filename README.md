@@ -27,8 +27,9 @@
 ## 📸 스크린샷
 
 * **메인 화면:**
-    ![메인 화면](https://github.com/user-attachments/assets/a4ca6d72-347b-4531-841c-c49c66343426)
-    ![사진 첨부 이후](https://github.com/user-attachments/assets/94ac6e86-35ad-4be8-aefc-5e2babc70515)
+ | <img src="https://github.com/user-attachments/assets/a4ca6d72-347b-4531-841c-c49c66343426" width="200">        | <img src="https://github.com/user-attachments/assets//94ac6e86-35ad-4be8-aefc-5e2babc70515" width="200">         | 
+| ---------- | ---------------------- | 
+| **메인 화면** | **사진 첨부 이후** |
 )
 
 * **건의하기 화면:**.
