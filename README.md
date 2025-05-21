@@ -42,11 +42,7 @@
             <td align="center">
                   <image src="https://github.com/user-attachments/assets/0f9da268-845a-4253-80fd-a9f863b84295" width="300rem"></image>
             </td>
-            <td align="center">
-                    <image src="https://github.com/user-attachments/assets/0deb0d74-db3d-4a3d-b117-681a837ce7d2" width="300rem" ></image>
-                    <image src="https://github.com/user-attachments/assets/140fe0c1-cf8c-43dc-9fd9-5a9042b818e3" width="300rem"></image>
-                    <image src="https://github.com/user-attachments/assets/bb5b2742-22fd-4188-b3bd-7839b360385c" width="300rem"></image>
-            </td>
+
       </tr>
       <tr>
             <td align="center">
