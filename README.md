@@ -30,7 +30,7 @@
    <div align="center"><img src="https://github.com/user-attachments/assets/a4ca6d72-347b-4531-841c-c49c66343426" width="200" ><img src="https://github.com/user-attachments/assets/94ac6e86-35ad-4be8-aefc-5e2babc70515" width="200"></div> 
 
 
-* **건의하기 화면:**.
+* **건의하기 화면:**
    <div align="center"><img src="https://github.com/user-attachments/assets/f5b3fcc1-e4cb-4cd7-bb5b-c93e28a06dd5" width="200" ><img src="https://github.com/user-attachments/assets/0f9da268-845a-4253-80fd-a9f863b84295" width="200"></div> 
 
 
