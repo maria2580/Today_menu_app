@@ -53,6 +53,9 @@
             <td align="center">
                   건의하기 화면
             </td>
+            <td align="center">
+                  건의 전송 (토스트 메세지)
+            </td>
       </tr>
 </table>
 <table align="center">
@@ -64,18 +67,18 @@
                   <img src="https://github.com/user-attachments/assets/140fe0c1-cf8c-43dc-9fd9-5a9042b818e3" width="300rem">
             </td>
             <td align="center">
-                    <img src="https://github.com/user-attachments/assets/bb5b2742-22fd-4188-b3bd-7839b360385c" width="300rem">
+                   <img src="https://github.com/user-attachments/assets/bb5b2742-22fd-4188-b3bd-7839b360385c" width="300rem">
             </td>
       </tr>
       <tr>
             <td align="center">
-                  메인 화면(기본 사진)
+                  날짜 선택(기본 오늘날짜)
             </td>
             <td align="center">
-                  메인 화면(사진 추가 후)
+                  날짜 선택(다음 날)
             </td>
             <td align="center">
-                  건의하기 화면
+                  확인 버튼 수행
             </td>
       </tr>
 </table>   
